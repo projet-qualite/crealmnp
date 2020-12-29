@@ -107,21 +107,29 @@
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     <span class="user-icon">
-                        <img src="backend/vendors/images/photo1.jpg" alt="">
+                        @if (Session::has('client'))
+                            <img src="https://eu.ui-avatars.com/api/?name={!!Session::get('client')->nom!!}+{!!Session::get('client')->prenom!!}" alt="">
+                        @else
+                        <img src="https://eu.ui-avatars.com/api/?name={!!Session::get('admin')->nom!!}+{!!Session::get('admin')->prenom!!}" alt="">
+
+                        @endif
                     </span>
-                    <span class="user-name">Ross C. Lopez</span>
+
+                        @if (Session::has('client'))
+                            <span id="user-name" class="user-name">{{ucfirst(Session::get('client')->prenom) }} {{ strtoupper(Session::get('client')->nom)}}</span>
+                        @else
+                            <span id="user-name" class="user-name">{{ucfirst(Session::get('admin')->prenom) }} {{ strtoupper(Session::get('admin')->nom)}}</span>
+                        @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                    <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                    <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
-                    <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
+                    <a class="dropdown-item" href="{{URL::to('/back')}}"><i class="dw dw-user1"></i> Tableau de bord</a>
+                    <a class="dropdown-item" href="{{URL::to('/settings')}}"><i class="dw dw-settings2"></i> Paramètres</a>
+                    <a class="dropdown-item" href="{{URL::to('/message')}}"><i class="dw dw-help"></i> Messages</a>
+                    <a class="dropdown-item" href="{{URL::to('/logout')}}"><i class="dw dw-logout"></i> Deconnexion</a>
                 </div>
             </div>
         </div>
-        <div class="github-link">
-            <a href="https://github.com/dropways/deskapp" target="_blank"><img src="backend/vendors/images/github.svg" alt=""></a>
-        </div>
+        
     </div>
 </div>
 
@@ -137,6 +145,8 @@
     </div>
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
+
+            @if (Session::has('client'))
             <ul id="accordion-menu">
                 <li>
                     <a href="{{URL::to('/back')}}" class="dropdown-toggle no-arrow">
@@ -150,17 +160,19 @@
                         <span class="micon dw dw-edit2"></span><span class="mtext">Prestation</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="form-basic.html">Faire une demande</a></li>
+                        <li><a href="{{URL::to('/demande')}}">Faire une demande</a></li>
                         <li><a href="{{URL::to('/encours')}}">Prestations en cours</a></li>
                         <li><a href="{{URL::to('/traite')}}">Prestations traitées</a></li>
                     </ul>
                 </li>
+                {{--}}
                 <li>
                     <a href="{{URL::to('/message')}}"  class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-chat3"></span><span class="mtext">Messages</span>
                     </a>
                     
                 </li>
+                {{--}}
                 <li>
                     <a href="{{URL::to('/settings')}}"  class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-settings"></span><span class="mtext">Paramètres</span>
@@ -171,6 +183,45 @@
               
                 
             </ul>
+                @else
+                <ul id="accordion-menu">
+                    <li>
+                        <a href="{{URL::to('/back')}}" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house-1"></span><span class="mtext">Tableau de bord</span>
+                        </a>
+                        
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-edit2"></span><span class="mtext">Prestation</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="{{URL::to('/encours')}}">Prestations en cours</a></li>
+                            <li><a href="{{URL::to('/traite')}}">Prestations traitées</a></li>
+                        </ul>
+                    </li>
+                    {{--}}
+                    <li>
+                        <a href="{{URL::to('/message')}}"  class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-chat3"></span><span class="mtext">Messages</span>
+                        </a>
+                        
+                    </li>
+                    {{--}}
+                    <li>
+                        <a href="{{URL::to('/liste_admin')}}"  class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-user-2"></span><span class="mtext">Liste des clients</span>
+                        </a>
+                        
+                    </li>
+                    
+                  
+                    
+                </ul>
+                @endif
+            
         </div>
     </div>
 </div>
+

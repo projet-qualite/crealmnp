@@ -4,7 +4,7 @@ $(".tab-wizard").steps({
 	transitionEffect: "fade",
 	titleTemplate: '<span class="step">#index#</span> #title#',
 	labels: {
-        finish: "Effectuer demande"
+        finish: "Modifier la demande"
 	},
 	onStepChanged: function (event, currentIndex, priorIndex) {
 		//console.log("Hey  :"+currentIndex);

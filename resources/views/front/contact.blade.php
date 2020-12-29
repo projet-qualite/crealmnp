@@ -16,33 +16,40 @@
                                 <div class="contact-wrap w-100 p-md-5 p-4">
                                     <h3 class="mb-4">Get in touch</h3>
                                     <div id="form-message-warning" class="mb-4"></div> 
-                              <div id="form-message-success" class="mb-4">
-                            Your message was sent, thank you!
-                              </div>
-                                    <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                    <div id="form-message-success" class="mb-4">
+                                        @if (Session::has('status_success'))
+                                        <div class="alert alert-success" role="alert">
+                                          {{Session::get('status_success')}}
+                                          {{Session::put('status_success', null)}}
+                                      </div>
+                                        @endif
+                                      
+                                    </div>
+                                    <form action="{{url('/send_mail')}}" method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                        {{ csrf_field() }}
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="label" for="name">Nom & Prenoms</label>
-                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nom">
+                                                    <input type="text" required class="form-control" name="nom" id="name" placeholder="Nom">
                                                 </div>
                                             </div>
                                             <div class="col-md-6"> 
                                                 <div class="form-group">
                                                     <label class="label" for="email">Adresse email</label>
-                                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                                    <input type="email" required class="form-control" name="email" id="email" placeholder="Email">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="label" for="subject">Sujet</label>
-                                                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Sujet">
+                                                    <input type="text" required class="form-control" name="sujet" id="subject" placeholder="Sujet">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="label" for="#">Message</label>
-                                                    <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
+                                                    <textarea name="message" required class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">

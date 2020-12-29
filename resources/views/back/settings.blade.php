@@ -27,22 +27,34 @@
                     <div class="pull-left">
                         <h4 class="text-blue h4">Informations générales</h4>
                     </div>
+
+                    
                     
                 </div>
-                <form>
-                    
+                <div id="form-message-success" class="mb-4">
+                    @if (Session::has('status_success'))
+                    <div class="alert alert-success" role="alert">
+                      {{Session::get('status_success')}}
+                      {{Session::put('status_success', null)}}
+                  </div>
+                    @endif
+                  
+                </div>
+                <form action="{{url('/modifier_parametre')}}" method="POST" id="contactForm" name="contactForm" class="contactForm">
+                    {{ csrf_field() }}
+                    {!! method_field('PUT') !!}
                     
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Nom</label>
-                                <input type="text" name="nom" class="form-control">
+                                <input type="text"  required name="nom" value="{{Session::get('client')->nom}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Prenom</label>
-                                <input type="text" name="prenom" class="form-control">
+                                <input type="text" required name="prenom"  value="{{Session::get('client')->prenom}}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -51,7 +63,7 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Date de naissance</label>
-                                <input type="date" name="birthday" class="form-control">
+                                <input type="date" name="birthday" value="{!!Session::get('client')->birthday!!}" class="form-control">
                             </div>
                         </div>
 
@@ -75,14 +87,14 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Adresse mail</label>
-                                <input type="email" name="email" class="form-control">
+                                <input type="email" required name="email" value="{{Session::get('client')->email}}" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Téléphone</label>
-                                <input type="number" name="phone" class="form-control">
+                                <input type="number" name="telephone" required value="{{Session::get('client')->telephone}}" class="form-control">
                             </div>
                         </div>
 
@@ -101,14 +113,14 @@
                         <div class="col-md-9 col-sm-12">
                             <div class="form-group">
                                 <label>Adresse</label>
-                                <input type="text" name="adresse" class="form-control">
+                                <input type="text" name="adresse" value="{!!Session::get('client')->adresse!!}" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-3 col-sm-12">
                             <div class="form-group">
                                 <label>Code postal</label>
-                                <input type="number" name="postal" class="form-control">
+                                <input type="number" name="code_postal" value="{!!Session::get('client')->code_postal!!}" class="form-control">
                             </div>
                         </div>
 
@@ -120,14 +132,14 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Département</label>
-                                <input type="text" name="departement" class="form-control">
+                                <input type="text" name="departement" value="{!!Session::get('client')->departement!!}" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label>Ville</label>
-                                <input type="text" name="ville" class="form-control">
+                                <input type="text" name="ville" value="{!!Session::get('client')->ville!!}" class="form-control">
                             </div>
                         </div>
 
@@ -151,4 +163,46 @@
                 </form>
                 
             </div>
+
+<script>
+   
+
+var nom = document.getElementsByName('nom')[0];
+var prenom = document.getElementsByName('prenom')[0];
+
+
+
+var strongRegex = new RegExp("^(?=.*[a-zA-Z])(?=.{1,})");
+
+function tester1()
+{
+    if(strongRegex.test(nom.value))
+    {
+        nom.setCustomValidity('');
+    }
+    else{
+        nom.setCustomValidity('Le nom doit être composé de lettres');
+    }
+
+}
+
+function tester2()
+{
+    if(strongRegex.test(prenom.value))
+    {
+        prenom.setCustomValidity('');
+    }
+    else{
+        prenom.setCustomValidity('Le prenom doit être composé de lettres');
+    }
+
+}
+
+
+nom.addEventListener('keyup', tester1, false);
+prenom.addEventListener('keyup', tester2, false);
+
+    
+
+</script>
 @endsection

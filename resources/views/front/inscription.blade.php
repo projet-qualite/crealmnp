@@ -13,16 +13,32 @@
                         <div class="row no-gutters">
                                 <div class="contact-wrap w-100 p-md-5 p-4">
                                     <h3 class="mb-4">Inscription</h3>
-                                    <div id="form-message-warning" class="mb-4"></div> 
+                            
+                                    <div id="form-message-warning" class="mb-4">
+                                        @if (Session::has('status_fail'))
+                                        <div class="alert alert-danger" role="alert">
+                                          {{Session::get('status_fail')}}
+                                          {{Session::put('status_fail', null)}}
+                                      </div>
+                                        @endif
+                                      
+                                </div> 
                               <div id="form-message-success" class="mb-4">
-                            Your message was sent, thank you!
+                                  @if (Session::has('status_success'))
+                                  <div class="alert alert-success" role="alert">
+                                    {{Session::get('status_success')}}
+                                    {{Session::put('status_success', null)}}
+                                </div>
+                                  @endif
+                                
                               </div>
-                                    <form action="{{url('/yo')}}" method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                    <form action="{{url('/inscrire')}}" method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                        {{ csrf_field() }}
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="label" for="name">Nom</label>
-                                                    <input required type="text" class="form-control" name="non" id="name" placeholder="Nom">
+                                                    <input required type="text" class="form-control" name="nom" id="name" placeholder="Nom">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -45,7 +61,7 @@
                                             <div class="col-md-6"> 
                                                 <div class="form-group">
                                                     <label class="label" for="email">Téléphone</label>
-                                                    <input required type="number" class="form-control" name="phone" id="email" placeholder="Téléphone">
+                                                    <input required type="number" class="form-control" name="telephone" id="email" placeholder="Téléphone">
                                                 </div>
                                             </div>
 
@@ -141,6 +157,42 @@
     }
 
     cmdp.addEventListener('keyup', confimer, false)
+
+
+    var nom = document.getElementsByName('nom')[0];
+var prenom = document.getElementsByName('prenom')[0];
+
+
+
+var strongRegex = new RegExp("^(?=.*[a-zA-Z])(?=.{1,})");
+
+function tester1()
+{
+    if(strongRegex.test(nom.value))
+    {
+        nom.setCustomValidity('');
+    }
+    else{
+        nom.setCustomValidity('Le nom doit être composé de lettres');
+    }
+
+}
+
+function tester2()
+{
+    if(strongRegex.test(prenom.value))
+    {
+        prenom.setCustomValidity('');
+    }
+    else{
+        prenom.setCustomValidity('Le prenom doit être composé de lettres');
+    }
+
+}
+
+
+nom.addEventListener('keyup', tester1, false);
+prenom.addEventListener('keyup', tester2, false);
 
 </script>
 

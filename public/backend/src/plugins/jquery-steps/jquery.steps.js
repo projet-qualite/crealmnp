@@ -454,9 +454,176 @@ function getValidEnumValue(enumType, keyOrValue)
  * @param state {Object} The state container of the current wizard
  * @return {Boolean} Indicates whether the action executed
  **/
+
+
+var strongRegex = new RegExp("^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$");
+//var bithday = document.getElementsByName("birthday")[0];
+
+var oui=null;
+var depart=null;
+
+var us =  document.getElementById('user_input_autocomplete_address')
+
+function birthdayFon()
+{
+
+    let yo = document.getElementById('birthdayP')
+    
+    let dat = new Date(yo.value);
+    let currentDate = new Date();
+
+   // console.log(bithday.value);
+    console.log(dat);
+    console.log(currentDate.getUTCFullYear());
+
+    let dif = currentDate.getUTCFullYear() - dat.getUTCFullYear();
+    console.log(dif);
+    let msg = document.getElementById('birthday');
+
+    if( dif<18 )
+    {
+        
+        msg.textContent = "Vous devez avoir au moins 18 ans";
+        oui = false
+    }
+    else{
+        msg.textContent = "";
+        oui = true;
+    } 
+
+
+    let reg = new RegExp("^(?=.*[a-zA-Z])(?=.{1,})");
+    let dep = document.getElementsByName('departement_birthday')[0];
+
+    let msg2 = document.getElementById('naissance');
+
+
+    if(!(reg.test(dep.value)))
+    {
+        msg2.textContent = "Champ non valide";
+        oui = false;
+    }
+    else{
+        msg2.textContent = "";
+        oui = true;
+    } 
+
+
+    return oui;
+    
+}
+
+
+function autre()
+{
+    document.getElementById('birthdayP').addEventListener('change', birthdayFon, false)
+}
+
+function autre2()
+{
+    document.getElementsByName('departement_birthday')[0].addEventListener('keyup', birthdayFon, false)
+}
+
+
+
+function autre3()
+{
+    document.getElementById('user_input_autocomplete_address').addEventListener('change', function(){
+        console.log("JAI Djô")
+        let reg2 = new RegExp("[^a-zA-Z0-9_]*");
+            let add = document.getElementById('user_input_autocomplete_address');
+            let msgAdd = document.getElementById('msg_adresse');
+
+
+            console.log(reg2.test(add.value))
+            //console.log(/^\s/.test(add.value))
+            console.log(document.getElementById('user_input_autocomplete_address').value)
+
+            /*if(!(reg2.test(add.value))  )
+            {
+                console.log("BINEEEE")
+                msgAdd.textContent = "Adresse non valide";
+                oui = false;
+                
+            }
+            else{
+                console.log("OLALALA")
+                msgAdd.textContent = "";
+                oui = true;
+            } */
+    }, false)
+
+    testerAdresse()
+}
+
+
+function autre4()
+{
+   /* document.getElementById('user_input_autocomplete_address').addEventListener('change', function(){
+        console.log(valeur)
+       console.log("Bonsoir")
+    }, false)*/
+}
+
+
+
+
+
+function other()
+{
+    
+}
+
+
+
+
+
+
+
+
+
 function goToNextStep(wizard, options, state)
 {
-    return paginationClick(wizard, options, state, increaseCurrentIndexBy(state, 1));
+
+    console.log("Valeur: "+state.currentIndex)
+
+    
+            
+           
+
+
+/*
+
+    let p = document.getElementsByName('nom')[0].value;
+    if(p.length === 3)
+    {
+        
+    }
+    else{
+        p.setCustomValidity('Le nom doit être composé de lettres');
+    }*/
+    //departement();
+    birthdayFon();
+    autre();
+    autre2()
+    autre3()
+
+    
+
+    if(oui)
+    {
+        return paginationClick(wizard, options, state, increaseCurrentIndexBy(state, 1));
+    }
+    else{
+        console.log("NOOOON");
+    }
+    
+    
+        
+   
+
+    
+   
 }
 
 /**
@@ -683,6 +850,7 @@ function keyUpHandler(event)
     else if (event.keyCode === keyCodes.right)
     {
         event.preventDefault();
+        //let p = document.getEleme
         goToNextStep(wizard, options, state);
     }
 }
@@ -2016,7 +2184,7 @@ var defaults = $.fn.steps.defaults = {
          * @default "Next"
          * @for defaults
          **/
-        next: "Next",
+        next: "Suivant",
 
         /**
          * Label for the previous button.
@@ -2026,7 +2194,7 @@ var defaults = $.fn.steps.defaults = {
          * @default "Previous"
          * @for defaults
          **/
-        previous: "Previous",
+        previous: "Précédent",
 
         /**
          * Label for the loading animation.
