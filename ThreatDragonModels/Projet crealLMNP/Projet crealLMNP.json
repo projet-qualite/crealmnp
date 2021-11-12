@@ -280,6 +280,14 @@
                   "status": "Open",
                   "severity": "Medium",
                   "description": "A generic information disclosure threat"
+                },
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Generic tampering threat",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "A generic tampering threat"
                 }
               ],
               "attrs": {
