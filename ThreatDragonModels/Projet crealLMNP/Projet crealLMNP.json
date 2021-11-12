@@ -8,8 +8,17 @@
     "contributors": [
       {
         "name": "fry marshall"
+      },
+      {
+        "name": "fry andrea"
       }
     ],
-    "diagrams": []
+    "diagrams": [
+      {
+        "title": "crea_diagram",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ]
   }
 }
