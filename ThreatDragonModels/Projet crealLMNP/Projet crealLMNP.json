@@ -5,7 +5,11 @@
     "description": "Nous allons relever les menaces potentiels auxquelles l'application peut faire face"
   },
   "detail": {
-    "contributors": [],
+    "contributors": [
+      {
+        "name": "fry marshall"
+      }
+    ],
     "diagrams": []
   }
 }
